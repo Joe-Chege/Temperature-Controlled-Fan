@@ -1,56 +1,76 @@
-Temperature-Controlled Fan System Using ESP32-S2-Solo-2
-This project demonstrates how to build a temperature-controlled fan system using the ESP32-S2-Solo-2 microcontroller, a DHT22 temperature sensor, and a status LED. The fan automatically turns ON when the temperature exceeds a threshold, with the status LED providing a visual indication.
+# **Temperature-Controlled Fan System Using ESP32-S2-Solo-2**
 
-Table of Contents
-Overview
-Hardware Components
-Circuit Diagram and Wiring
-Software Setup
-Code Explanation
-How It Works
-Usage
-Troubleshooting
-Conclusion
-Overview
-This system reads the ambient temperature using the DHT22 temperature sensor. When the temperature exceeds 26°C, the fan and the status LED are turned on. When the temperature falls below the threshold, both the fan and LED are turned off.
+This project demonstrates how to build a **temperature-controlled fan system** using the **ESP32-S2-Solo-2 microcontroller**, a **DHT22 temperature sensor**, and a **status LED**. The fan automatically turns ON when the temperature exceeds a threshold, with the status LED providing a visual indication. 
 
-Hardware Components
-ESP32-S2-Solo-2 Microcontroller
-DHT22 Temperature and Humidity Sensor
-5V DC Fan
-Status LED (optional)
-220Ω Resistor (for LED)
-Breadboard and Jumper Wires
-Power Source (Battery or USB cable)
-Circuit Diagram and Wiring
-Component	ESP32 Pin	Notes
-DHT22 Sensor	GPIO 34	Sensor reads the ambient temperature. Connect the VCC to 3.3V, GND to GND, and DATA to GPIO 34.
-Fan	GPIO 21	Control pin for the fan. Connect one side to GPIO 21 and the other to ground. Use a transistor or relay if needed for higher currents.
-Status LED	GPIO 16	Indicates whether the fan is active. Use a 220Ω resistor in series with the LED.
-Software Setup
-Arduino IDE Installation
+---
 
-Download and install the Arduino IDE from here.
-Install ESP32 Board Support
+## **Table of Contents**
+1. [Overview](#overview)  
+2. [Hardware Components](#hardware-components)  
+3. [Circuit Diagram and Wiring](#circuit-diagram-and-wiring)  
+4. [Software Setup](#software-setup)  
+5. [Code Explanation](#code-explanation)  
+6. [How It Works](#how-it-works)  
+7. [Usage](#usage)  
+8. [Troubleshooting](#troubleshooting)  
+9. [Conclusion](#conclusion)  
 
-Go to File > Preferences in the Arduino IDE.
-Add the following URL to the "Additional Board Manager URLs":
-https://dl.espressif.com/dl/package_esp32_index.json
-Go to Tools > Board > Board Manager, search for "ESP32", and install the board package.
-Install DHT Library
+---
 
-Go to Sketch > Include Library > Manage Libraries.
-Search for DHT sensor library and install the one by Adafruit.
-Select ESP32 Board
+## **Overview**
+This system reads the ambient temperature using the **DHT22 temperature sensor**. When the temperature exceeds **26°C**, the fan and the status LED are turned on. When the temperature falls below the threshold, both the fan and LED are turned off.
 
-Go to Tools > Board and select ESP32-S2 Dev Module.
-Select the appropriate COM port from Tools > Port.
-Code Explanation
+---
+
+## **Hardware Components**
+1. **ESP32-S2-Solo-2 Microcontroller**  
+2. **DHT22 Temperature and Humidity Sensor**  
+3. **5V DC Fan**  
+4. **Status LED (optional)**  
+5. **220Ω Resistor** (for LED)  
+6. **Breadboard and Jumper Wires**  
+7. **Power Source** (Battery or USB cable)  
+
+---
+
+## **Circuit Diagram and Wiring**
+
+| **Component**   | **ESP32 Pin** | **Notes** |
+|-----------------|---------------|-----------|
+| DHT22 Sensor    | GPIO 34       | Sensor reads the ambient temperature. Connect the **VCC** to 3.3V, **GND** to GND, and **DATA** to GPIO 34. |
+| Fan             | GPIO 21       | Control pin for the fan. Connect one side to GPIO 21 and the other to ground. Use a transistor or relay if needed for higher currents. |
+| Status LED      | GPIO 16       | Indicates whether the fan is active. Use a 220Ω resistor in series with the LED. |
+
+---
+
+## **Software Setup**
+
+1. **Arduino IDE Installation**  
+   - Download and install the **Arduino IDE** from [here](https://www.arduino.cc/en/software).
+
+2. **Install ESP32 Board Support**  
+   - Go to **File > Preferences** in the Arduino IDE.  
+   - Add the following URL to the "Additional Board Manager URLs":  
+     `https://dl.espressif.com/dl/package_esp32_index.json`  
+   - Go to **Tools > Board > Board Manager**, search for "ESP32", and install the board package.
+
+3. **Install DHT Library**  
+   - Go to **Sketch > Include Library > Manage Libraries**.  
+   - Search for **DHT sensor library** and install the one by **Adafruit**.
+
+4. **Select ESP32 Board**  
+   - Go to **Tools > Board** and select **ESP32-S2 Dev Module**.  
+   - Select the appropriate **COM port** from **Tools > Port**.
+
+---
+
+## **Code Explanation**
+
 The following code initializes the fan control system and the DHT22 temperature sensor. It reads the temperature every 2 seconds and toggles the fan and LED based on the threshold (26°C).
 
-Code
-cpp
-Copy code
+### **Code**
+
+```cpp
 #include <DHT.h>  // Include DHT library for temperature/humidity sensor
 
 #define DHTPIN 34       // Pin where the DHT sensor is connected
@@ -113,32 +133,3 @@ void loop() {
   // Wait a short period before the next reading
   delay(2000);  // Read every 2 seconds
 }
-How It Works
-Setup Phase
-
-The code initializes the fan pin and LED pin as outputs and ensures both are OFF initially.
-It also initializes the DHT22 sensor for reading temperature data.
-Loop Phase
-
-The temperature is read every 2 seconds.
-If the temperature is above 26°C, the fan and LED are turned ON.
-If the temperature falls below 26°C, both the fan and LED are turned OFF.
-If the temperature reading fails, the system waits 2 seconds before retrying.
-Usage
-Power the ESP32 through a battery or USB.
-Open the Serial Monitor (115200 baud) in the Arduino IDE to view the temperature readings.
-Adjust the temperature sensor’s environment and observe the fan and LED behavior.
-Troubleshooting
-Fan does not turn ON/OFF:
-
-Verify that the wiring is correct.
-Ensure the correct GPIO pins are used in the code.
-Temperature readings show "nan":
-
-Check if the DHT sensor is correctly wired.
-Make sure the DHT library is installed.
-ESP32 not detected by the Arduino IDE:
-
-Install the correct drivers and ensure the ESP32 board support is installed.
-Conclusion
-This project demonstrates how to build a simple temperature-controlled fan system using the ESP32 and DHT22 sensor. It can be extended by adding more sensors, changing thresholds, or using PWM for variable fan speed. This setup can be useful for home automation or greenhouse monitoring.
